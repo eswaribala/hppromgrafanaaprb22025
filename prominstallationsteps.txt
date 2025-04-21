@@ -52,4 +52,15 @@ Step6
 chmod 777 ./port-forward.sh
 ./port-forward.sh
 
+Step 7
+Go to browser
+#prometheus server
+http://localhost:9090
+#push gatway 
+http://localhost:9091
+#node exporter
+http://localhost:9100
+#alert manager
+http://localhost:9093
+
 
