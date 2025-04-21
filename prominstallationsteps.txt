@@ -75,4 +75,6 @@ kubectl get secret --namespace default my-grafana -o jsonpath="{.data.admin-pass
 #open browser to access grafana
 http://localhost:3000
 
-
+#modify promethus configuration, download current configuration
+#go to any folder
+helm show values prometheus-community/prometheus > values.yaml
