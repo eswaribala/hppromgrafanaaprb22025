@@ -10,3 +10,33 @@ Windows amd64 (hyperlink)
 #Check helm version
 
 helm version
+Step2
+
+#check helm repository list
+
+helm repo list
+
+#Add repository
+helm repo add bitnami https://charts.bitnami.com/bitnami
+
+#prometheus installation
+
+Step 1: Add the Prometheus Helm Chart Repository
+
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+
+Update your Helm repository:
+helm repo update
+Step 2:
+kubectl create namespace prometheus
+
+Step3:
+
+helm install prometheus prometheus-community/prometheus -n prometheus
+
+Step 4:
+
+helm list -n prometheus
+Step5:
+
+kubectl get pods -n prometheus
