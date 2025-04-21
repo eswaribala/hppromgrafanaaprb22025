@@ -56,7 +56,7 @@ Step 7
 Go to browser
 #prometheus server
 http://localhost:9090
-#push gatway 
+#push gateway 
 http://localhost:9091
 #node exporter
 http://localhost:9100
