@@ -78,3 +78,17 @@ http://localhost:3000
 #modify promethus configuration, download current configuration
 #go to any folder
 helm show values prometheus-community/prometheus > values.yaml
+
+#integrate java api metrics to prometheus for pull metrics
+ - job_name: 'customer-app'
+        metrics_path: '/actuator/prometheus'
+        static_configs:
+          - targets: ['host.docker.internal:7074']
+
+#after updating values.yaml file , send the updates to prometheus server
+
+helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
+
+kubectl get pods -n prometheus
+
+
