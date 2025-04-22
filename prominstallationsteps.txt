@@ -91,4 +91,8 @@ helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n promet
 
 kubectl get pods -n prometheus
 
+#alerting rules
+#modify values.yaml
+helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
+
 
