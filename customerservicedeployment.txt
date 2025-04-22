@@ -4,7 +4,7 @@ open cmd with admin privileges
 
 kubectl apply -f postgres-pv.yaml
   
-kubectl apply -f postgres-deployment-v17.yaml
+kubectl apply -f postgres-deployment.yaml
 
 #application needs db to be created
 kubectl exec -it <pod name> -- psql -U postgres
