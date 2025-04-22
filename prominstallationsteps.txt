@@ -91,7 +91,10 @@ helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n promet
 
 kubectl get pods -n prometheus
 
+#configure receivers slack,pagerduty,opsgnie,customreceiver
 #alerting rules
+#alert manager
+
 #modify values.yaml
 helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
 
