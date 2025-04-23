@@ -144,7 +144,6 @@ helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n promet
 #download custom exporter project
 kubectl apply -f deployment-python.yaml
 kubectl apply -f service-python.yaml
-#expose
-kubectl expose deployment --port 9877 metric-app --type=LoadBalancer --name=metricservicev1
+
 
 
