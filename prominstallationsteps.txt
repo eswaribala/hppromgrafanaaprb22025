@@ -124,4 +124,6 @@ http://localhost:9182/metrics
 #after save changes, run the following 
 
 helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
+#download grok exporter
+https://github.com/fstab/grok_exporter/releases/tag/v1.0.0.RC5
 
