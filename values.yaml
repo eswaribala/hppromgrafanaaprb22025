@@ -1347,7 +1347,7 @@ alertmanager:
      
       - name: 'slack-notifications'
         slack_configs:
-            - api_url: 'https://hooks.slack.com/services/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'
+            - api_url: ''
               channel: '#promalertchannel'
               send_resolved: true
               title: "{{ .CommonLabels.alertname }} - {{ .Status }}"
@@ -1360,7 +1360,7 @@ alertmanager:
                {{ end }}  
       - name: 'pager-duty-notifications'
         pagerduty_configs:
-        - service_key: 'e9b3c481c75f4302c08ba4ce4f420836'   
+        - service_key: ''   
 
   persistence:
     size: 2Gi
