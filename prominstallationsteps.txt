@@ -108,7 +108,7 @@ helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n promet
 
 helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
 #windows exporter
-#windows exporter
+
 #download windows amd exe file
 https://github.com/prometheus-community/windows_exporter/releases
 #execute exe file by clicking on more info and run anyway
