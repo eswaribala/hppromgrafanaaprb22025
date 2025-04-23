@@ -128,3 +128,16 @@ helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n promet
 https://github.com/fstab/grok_exporter/releases/tag/v1.0.0.RC5
 #extract and run
 grok_exporter -config ./example/config.yml
+
+#integrate grok exporter to prometheus
+#modify values.yaml for windows exporter
+- job_name: 'grokexporter'
+        metrics_path: '/metrics'
+        static_configs:
+          - targets: ['ipaddress:9144']
+
+#after save changes, run the following 
+
+helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
+
+
