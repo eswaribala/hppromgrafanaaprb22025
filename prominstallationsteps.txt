@@ -140,4 +140,10 @@ grok_exporter -config ./example/config.yml
 
 helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
 
+#custom exporter deployment
+#download custom exporter project
+kubectl apply -f deployment-python.yaml
+kubectl apply -f service-python.yaml
+
+
 
