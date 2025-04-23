@@ -780,6 +780,22 @@ serverFiles:
             annotations:
               description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute.'
               summary: 'Instance {{ $labels.instance }} down'
+          - alert: HighCPUUsage
+            expr: sum(node_cpu_seconds_total{mode="idle",instance="prometheus-prometheus-node-exporter:9100"})/(60*60) > 30
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Instance {{ $labels.instance }} CPU usage is high"
+              description: "CPU usage on instance {{ $labels.instance }} has been above 30% for the last 1 minute." 
+          - alert: LowAvailableMemory
+            expr: node_memory_MemAvailable_bytes{job="node_exporter"} / node_memory_MemTotal_bytes{job="node_exporter"} * 100 >50
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Low memory available on {{ $labels.instance }}"
+              description: "Available memory on instance {{ $labels.instance }} is below 10% for more than 1 minute."  
   ## DEPRECATED DEFAULT VALUE, unless explicitly naming your files, please use alerting_rules.yml
   alerts: {}
 
@@ -806,10 +822,25 @@ serverFiles:
         metrics_path: '/actuator/prometheus'
         static_configs:
           - targets: ['host.docker.internal:7074']
+      - job_name: 'node_exporter'
+        static_configs:
+          - targets: ['prometheus-prometheus-node-exporter:9100']
       - job_name: 'telegraf'
         metrics_path: '/metrics'     
         static_configs:
           - targets: ['host.docker.internal:9273']
+      - job_name: 'windowsexporter'
+        metrics_path: '/metrics'
+        static_configs:
+          - targets: ['192.168.0.108:9182']
+      - job_name: 'grokexporter'
+        metrics_path: '/metrics'
+        static_configs:
+          - targets: ['192.168.0.108:9144']
+      - job_name: 'pythoncustomexporter'
+        metrics_path: '/metrics'
+        static_configs:
+          - targets: ['host.docker.internal:9877']
       # A scrape configuration for running Prometheus on a Kubernetes cluster.
       # This uses separate scrape configs for cluster components (i.e. API server, node)
       # and services to allow each to use different authentication configs.
@@ -1293,6 +1324,12 @@ alertmanager:
           repeat_interval: 1h
         - match:
             severity: critical
+          receiver: 'email-alerts'
+          group_wait: 10s
+          group_interval: 1m
+          repeat_interval: 30m
+        - match:
+            severity: warning
           receiver: 'pager-duty-notifications'
           group_wait: 10s
           group_interval: 1m
@@ -1310,7 +1347,7 @@ alertmanager:
      
       - name: 'slack-notifications'
         slack_configs:
-            - api_url: ''
+            - api_url: 'https://hooks.slack.com/services/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'
               channel: '#promalertchannel'
               send_resolved: true
               title: "{{ .CommonLabels.alertname }} - {{ .Status }}"
@@ -1323,7 +1360,7 @@ alertmanager:
                {{ end }}  
       - name: 'pager-duty-notifications'
         pagerduty_configs:
-        - service_key: ''   
+        - service_key: 'e9b3c481c75f4302c08ba4ce4f420836'   
 
   persistence:
     size: 2Gi
