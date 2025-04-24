@@ -56,3 +56,6 @@ alertmanager:
       - name: 'pager-duty-notifications'
         pagerduty_configs:
         - service_key: ''   
+      - name: 'web-hook'
+        webhook_configs:
+            - url: 'http://host.docker.internal:4000/webhook'
