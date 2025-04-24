@@ -173,6 +173,9 @@ kubectl patch -n london ds london-prometheus-prometheus-node-exporter --type "js
 
  kubectl patch ds london-prometheus-prometheus-node-exporter -n london  --type='json' -p='[{"op": "replace", "path":"/spec/template/spec/containers/0/ports/0/containerPort", "value": 9102}]'
 
+#run prometheus in localhost
+kubectl port-forward svc/newyork-prometheus-server -n newyork 9096:80
+kubectl port-forward svc/london-prometheus-server -n london 9098:80
 
 #aggregation
 - job_name: 'global-view'
