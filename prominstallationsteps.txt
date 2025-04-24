@@ -152,3 +152,30 @@ kubectl apply -f service-python.yaml
           - targets: ['host.docker.internal:9877']
 helm upgrade prometheus prometheus-community/prometheus -f values.yaml -n prometheus
 
+
+#federation
+#create geographically separated
+kubectl create ns newyork
+kubectl create ns london
+helm install newyork-prometheus prometheus-community/prometheus -n newyork
+helm install london-prometheus prometheus-community/prometheus -n london
+#aggregation
+- job_name: 'global-view'
+        scrape_interval: 15s
+        honor_labels: true
+        metrics_path: '/federate'
+        params:
+         'match[]':
+           - '{__name__=~".+"}'  # Match all metrics, adjust as necessary
+        static_configs:
+          - targets: ['host.docker.internal:9080','host.docker.internal:9070']
+
+#aggregated alerting rules
+- alert: JobRequestRateSum
+           expr: sum(rate(http_server_requests_seconds_sum[24h])) by (outcome)
+           for: 2m
+           labels:
+             severity: critical
+           annotations:
+             summary: "Job Request {{ $labels.instance }} is not running"
+             description: "Job Request {{ $labels.instance }} has been down for the last 2 minutes."
