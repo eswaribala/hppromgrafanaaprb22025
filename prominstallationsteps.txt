@@ -159,6 +159,14 @@ kubectl create ns newyork
 kubectl create ns london
 helm install newyork-prometheus prometheus-community/prometheus -n newyork
 helm install london-prometheus prometheus-community/prometheus -n london
+#if node exporter goes to pending state due to non availability port, run the following
+#bash script
+#bash script
+ kubectl patch ds newyork-prometheus-prometheus-node-exporter -n newyork  --type='json' -p='[{"op": "replace", "path":"/spec/template/spec/containers/0/ports/0/containerPort", "value": 9101}]'
+
+ kubectl patch ds london-prometheus-prometheus-node-exporter -n london  --type='json' -p='[{"op": "replace", "path":"/spec/template/spec/containers/0/ports/0/containerPort", "value": 9102}]'
+
+
 #aggregation
 - job_name: 'global-view'
         scrape_interval: 15s
