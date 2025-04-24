@@ -202,3 +202,7 @@ change all the 9100 to 9101
            annotations:
              summary: "Job Request {{ $labels.instance }} is not running"
              description: "Job Request {{ $labels.instance }} has been down for the last 2 minutes."
+#aggregated query
+node_cpu_seconds_total{job="kubernetes-service-endpoints",instance="192.168.65.3:9100"}
+node_cpu_seconds_total{job="kubernetes-service-endpoints",instance="192.168.65.3:9101"}
+node_cpu_seconds_total{job="kubernetes-service-endpoints",instance="192.168.65.3:9102"}
